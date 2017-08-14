@@ -1,12 +1,12 @@
 {
-  "name": "mm-2-ssd",
-  "version": "0.0.0",
-  "description": "mm-2-ssd",
+  "name": "mm2ssd",
+  "version": "1.0.0",
+  "description": "Transforming Mongoose model into Swagger schema definitions",
   "license": "MIT",
   "repository": "",
   "author": {
-    "name": "",
-    "email": "",
+    "name": "Yu Chen",
+    "email": "yu.chen@live.ie",
     "url": ""
   },
   "keywords": [
