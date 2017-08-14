@@ -4,24 +4,27 @@ import { mm2ssd } from '../src/';
 test('Should generate schema with embedded fields', () => {
   const user = new mongoose.Schema({
     name: String,
-    age: Number
+    age: Number,
   });
-  const model = mongoose.model('embedded', new mongoose.Schema({
-    contacts: [user],
-    info: user
-  }));
+  const model = mongoose.model(
+    'embedded',
+    new mongoose.Schema({
+      contacts: [user],
+      info: user,
+    })
+  );
   const schema = mm2ssd(model, 'xml');
   expect(schema).toEqual({
     type: 'object',
     properties: {
       _id: {
         type: 'string',
-        required: false
+        required: false,
       },
       __v: {
         type: 'integer',
         format: 'int64',
-        required: false
+        required: false,
       },
       contacts: {
         type: 'array',
@@ -30,51 +33,51 @@ test('Should generate schema with embedded fields', () => {
           properties: {
             _id: {
               type: 'string',
-              required: false
+              required: false,
             },
             name: {
               type: 'string',
-              required: false
+              required: false,
             },
             age: {
               type: 'integer',
               format: 'int64',
-              required: false
+              required: false,
             },
           },
           xml: {
-            name: 'item'
+            name: 'item',
           },
-          required: []
+          required: [],
         },
-        required: false
+        required: false,
       },
       info: {
         type: 'object',
         properties: {
           _id: {
             type: 'string',
-            required: false
+            required: false,
           },
           name: {
             type: 'string',
-            required: false
+            required: false,
           },
           age: {
             type: 'integer',
             format: 'int64',
-            required: false
+            required: false,
           },
         },
         xml: {
-          name: 'info'
+          name: 'info',
         },
-        required: []
-      }
+        required: [],
+      },
     },
     xml: {
-      name: 'xml'
+      name: 'xml',
     },
-    required: []
+    required: [],
   });
 });

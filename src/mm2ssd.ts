@@ -15,7 +15,7 @@ interface ISchemaBaseType {
   format?: string;
   items?: ISchemaBaseType;
   properties?: {
-    [index: string]: ISchemaBaseType
+    [index: string]: ISchemaBaseType;
   };
   description?: string;
   required?: boolean | string[];
@@ -37,16 +37,19 @@ class MM2SSD {
 
   public toObject = (): any => {
     return this.__obj;
-  }
+  };
 
-  private processEmbedded = (schema: Schema, xmlTag: string): ISchemaBaseType => {
+  private processEmbedded = (
+    schema: Schema,
+    xmlTag: string
+  ): ISchemaBaseType => {
     const obj = {
       type: 'object',
       properties: {},
       xml: {
-        name: xmlTag
+        name: xmlTag,
       },
-      required: schema.requiredPaths()
+      required: schema.requiredPaths(),
     };
 
     schema.eachPath((name: string, type: ISchemaType) => {
@@ -87,13 +90,13 @@ class MM2SSD {
       }
     });
     return obj;
-  }
+  };
 
   private processArray = (type: ISchemaType): ISchemaBaseType => {
     const obj: ISchemaBaseType = {
       type: 'array',
-      required: !!type.isRequired
-    }
+      required: !!type.isRequired,
+    };
     switch (type.casterConstructor) {
       case SchemaTypes.Array:
         obj.items = this.processArray(type);
@@ -127,93 +130,93 @@ class MM2SSD {
         break;
     }
     return obj;
-  }
+  };
 
   private processBoolean = (type: ISchemaType): ISchemaBaseType => {
     const obj: ISchemaBaseType = {
       type: 'boolean',
-      required: !!type.isRequired
-    }
+      required: !!type.isRequired,
+    };
     return obj;
-  }
+  };
 
   private processBuffer = (type: ISchemaType): ISchemaBaseType => {
     return this.processString(type);
-  }
+  };
 
   private processDate = (type: ISchemaType): ISchemaBaseType => {
     const obj: ISchemaBaseType = {
       type: 'string',
       format: 'date-time',
-      required: !!type.isRequired
-    }
+      required: !!type.isRequired,
+    };
     if (type.enumValues && type.enumValues.length) {
       obj.enum = type.enumValues;
     }
     return obj;
-  }
+  };
 
   private processDecimal128 = (type: ISchemaType): ISchemaBaseType => {
     const obj: ISchemaBaseType = {
       type: 'number',
       format: 'double',
-      required: !!type.isRequired
-    }
+      required: !!type.isRequired,
+    };
     if (type.enumValues && type.enumValues.length) {
       obj.enum = type.enumValues;
     }
     return obj;
-  }
+  };
 
   private processDocumentArray = (type: ISchemaType): ISchemaBaseType => {
     const obj: ISchemaBaseType = {
       type: 'array',
       items: this.processEmbedded(type.schema, 'item'),
-      required: !!type.isRequired
-    }
+      required: !!type.isRequired,
+    };
     return obj;
-  }
+  };
 
   private processMixed = (type: ISchemaType): ISchemaBaseType => {
     const obj: ISchemaBaseType = {
       type: 'object',
       properties: {},
-      required: !!type.isRequired
-    }
+      required: !!type.isRequired,
+    };
     if (type.enumValues && type.enumValues.length) {
       obj.enum = type.enumValues;
     }
     return obj;
-  }
+  };
 
   private processNumber = (type: ISchemaType): ISchemaBaseType => {
     const obj: ISchemaBaseType = {
       type: 'integer',
       format: 'int64',
-      required: !!type.isRequired
-    }
+      required: !!type.isRequired,
+    };
     if (type.enumValues && type.enumValues.length) {
       obj.enum = type.enumValues;
     }
     return obj;
-  }
+  };
 
   private processObjectId = (type: ISchemaType): ISchemaBaseType => {
     const obj: ISchemaBaseType = {
       type: 'string',
-      required: !!type.isRequired
-    }
+      required: !!type.isRequired,
+    };
     return obj;
-  }
+  };
 
   private processString = (type: ISchemaType): ISchemaBaseType => {
     const obj: ISchemaBaseType = {
       type: 'string',
-      required: !!type.isRequired
-    }
+      required: !!type.isRequired,
+    };
     if (type.enumValues && type.enumValues.length) {
       obj.enum = type.enumValues;
     }
     return obj;
-  }
+  };
 }
