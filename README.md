@@ -2,9 +2,19 @@
 [![Coverage Status](https://coveralls.io/repos/github/yc-node-typescript/mm2ssd/badge.svg?branch=master)](https://coveralls.io/github/yc-node-typescript/mm2ssd?branch=master)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
-# Intro
+# Overview
 
 Transforming Mongoose model into Swagger schema definitions
+
+# Installation
+
+```bash
+npm i mm2ssd
+```
+or
+```
+yarn add mm2ssd
+```
 
 # Usage
 
@@ -73,3 +83,6 @@ test('Should generate simple schema', () => {
 });
 ```
 
+# Contributing
+
+Looking forward to seeing your contributions!
