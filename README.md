@@ -9,11 +9,11 @@ Transforming Mongoose model into Swagger schema definitions
 # Installation
 
 ```bash
-npm i mm2ssd
+npm i @ycnt/mm2ssd
 ```
 or
 ```
-yarn add mm2ssd
+yarn add @ycnt/mm2ssd
 ```
 
 # Usage
@@ -28,7 +28,7 @@ mm2ssd(model: mongoose.Model, xmlTagName: string);
 
 ```ts
 import * as mongoose from 'mongoose';
-import { mm2ssd } from 'mm2ssd';
+import { mm2ssd } from '@ycnt/mm2ssd';
 
 test('Should generate simple schema', () => {
   const model = mongoose.model('simple', new mongoose.Schema({
