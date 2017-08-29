@@ -1,13 +1,14 @@
 import { Model, Schema, SchemaType, SchemaTypes } from 'mongoose';
 
 interface ISchemaType extends SchemaType {
-  casterConstructor: Function;
+  casterConstructor: any;
   constructor: Function;
   enumValues: any[];
   path: string;
   instance: string;
   isRequired: true;
   schema: Schema;
+  options: any;
 }
 
 interface ISchemaBaseType {
@@ -97,10 +98,11 @@ class MM2SSD {
       type: 'array',
       required: !!type.isRequired,
     };
+    if (type.casterConstructor.casterConstructor) {
+      obj.items = this.processArray(type.casterConstructor);
+      return obj;
+    }
     switch (type.casterConstructor) {
-      case SchemaTypes.Array:
-        obj.items = this.processArray(type);
-        break;
       case SchemaTypes.Boolean:
         obj.items = this.processBoolean(type);
         break;
@@ -112,9 +114,6 @@ class MM2SSD {
         break;
       case SchemaTypes.Decimal128:
         obj.items = this.processDecimal128(type);
-        break;
-      case SchemaTypes.DocumentArray:
-        obj.items = this.processDocumentArray(type);
         break;
       case SchemaTypes.Mixed:
         obj.items = this.processMixed(type);
@@ -150,9 +149,6 @@ class MM2SSD {
       format: 'date-time',
       required: !!type.isRequired,
     };
-    if (type.enumValues && type.enumValues.length) {
-      obj.enum = type.enumValues;
-    }
     return obj;
   };
 
@@ -162,8 +158,8 @@ class MM2SSD {
       format: 'double',
       required: !!type.isRequired,
     };
-    if (type.enumValues && type.enumValues.length) {
-      obj.enum = type.enumValues;
+    if (type.options && type.options.enum) {
+      obj.enum = type.options.enum;
     }
     return obj;
   };
@@ -183,9 +179,6 @@ class MM2SSD {
       properties: {},
       required: !!type.isRequired,
     };
-    if (type.enumValues && type.enumValues.length) {
-      obj.enum = type.enumValues;
-    }
     return obj;
   };
 
@@ -195,8 +188,8 @@ class MM2SSD {
       format: 'int64',
       required: !!type.isRequired,
     };
-    if (type.enumValues && type.enumValues.length) {
-      obj.enum = type.enumValues;
+    if (type.options && type.options.enum) {
+      obj.enum = type.options.enum;
     }
     return obj;
   };

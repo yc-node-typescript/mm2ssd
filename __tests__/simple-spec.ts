@@ -11,8 +11,18 @@ test('Should generate simple schema', () => {
         enum: ['Tom', 'Jerry'],
       },
       age: Number,
+      grade: {
+        type: Number,
+        enum: [1, 2, 3] 
+      },
       date: Date,
       balance: mongoose.SchemaTypes.Decimal128,
+      rate: {
+        type: mongoose.SchemaTypes.Decimal128,
+        enum: [0.1, 0.2]
+      },
+      buffer: Buffer,
+      member: Boolean
     })
   );
   const schema = mm2ssd(model, 'xml');
@@ -38,6 +48,12 @@ test('Should generate simple schema', () => {
         format: 'int64',
         required: false,
       },
+      grade: {
+        type: 'integer',
+        format: 'int64',
+        required: false,
+        enum: [1, 2, 3],
+      },
       date: {
         type: 'string',
         format: 'date-time',
@@ -48,6 +64,20 @@ test('Should generate simple schema', () => {
         format: 'double',
         required: false,
       },
+      rate: {
+        type: 'number',
+        format: 'double',
+        required: false,
+        enum: [0.1, 0.2]
+      },
+      buffer: {
+        type: 'string',
+        required: false
+      },
+      member: {
+        type: 'boolean',
+        required: false
+      }
     },
     xml: {
       name: 'xml',
