@@ -5,15 +5,22 @@ test('Should generate schema with array fields', () => {
   const model = mongoose.model(
     'array',
     new mongoose.Schema({
-      subjects: [
-        {
-          type: String,
-        },
-      ],
-      events: [String],
+      array: [[String]],
+      boolean: [Boolean],
+      buffer: [Buffer],
+      date: [Date],
+      decimal: [mongoose.SchemaTypes.Decimal128],
+
+      // case SchemaTypes.DocumentArray:
+      //   obj.items = this.processDocumentArray(type);
+      //   break;
+      mixed: [{}],
+      number: [Number],
+      objectId: [mongoose.SchemaTypes.ObjectId],
+      string: [String]
     })
   );
-  const schema = mm2ssd(model, 'xml');
+  const schema = mm2ssd(model);
   expect(schema).toEqual({
     type: 'object',
     properties: {
@@ -26,7 +33,27 @@ test('Should generate schema with array fields', () => {
         format: 'int64',
         required: false,
       },
-      subjects: {
+      array: {
+        type: 'array',
+        items: {
+          type: 'array',
+          items: {
+            type: 'string',
+            required: false
+          },
+          required: false,
+        },
+        required: false,
+      },
+      boolean: {
+        type: 'array',
+        items: {
+          type: 'boolean',
+          required: false,
+        },
+        required: false,
+      },
+      buffer: {
         type: 'array',
         items: {
           type: 'string',
@@ -34,7 +61,51 @@ test('Should generate schema with array fields', () => {
         },
         required: false,
       },
-      events: {
+      date: {
+        type: 'array',
+        items: {
+          type: 'string',
+          format: 'date-time',
+          required: false,
+        },
+        required: false,
+      },
+      decimal: {
+        type: 'array',
+        items: {
+          type: 'number',
+          format: 'double',
+          required: false,
+        },
+        required: false,
+      },
+      mixed: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {},
+          required: false,
+        },
+        required: false,
+      },
+      number: {
+        type: 'array',
+        items: {
+          type: 'integer',
+          format: 'int64',
+          required: false,
+        },
+        required: false,
+      },
+      objectId: {
+        type: 'array',
+        items: {
+          type: 'string',
+          required: false,
+        },
+        required: false,
+      },
+      string: {
         type: 'array',
         items: {
           type: 'string',
@@ -44,7 +115,7 @@ test('Should generate schema with array fields', () => {
       },
     },
     xml: {
-      name: 'xml',
+      name: 'array',
     },
     required: [],
   });
