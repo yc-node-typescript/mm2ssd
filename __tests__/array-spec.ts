@@ -17,7 +17,7 @@ test('Should generate schema with array fields', () => {
       mixed: [{}],
       number: [Number],
       objectId: [mongoose.SchemaTypes.ObjectId],
-      string: [String]
+      string: [String],
     })
   );
   const schema = mm2ssd(model);
@@ -39,7 +39,7 @@ test('Should generate schema with array fields', () => {
           type: 'array',
           items: {
             type: 'string',
-            required: false
+            required: false,
           },
           required: false,
         },
